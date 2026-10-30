@@ -1,103 +1,103 @@
-# Clean-Auto — сайт-визитка автомойки
+# Clean-Auto — Car Wash Landing Page
 
-Одностраничный сайт автомойки в Киеве с услугами, ценами и онлайн-записью. Заявки с формы сохраняются в MongoDB через собственный API на Express. Интерфейс на украинском: цены в гривнах, телефоны +380.
+A single-page website for a car wash in Kyiv with services, prices and online booking. Booking requests are stored in MongoDB through a custom Express API. The UI is in Ukrainian, with prices in UAH and +380 phone numbers.
 
-![Главный экран сайта](docs/screenshot.png)
+![Home screen](docs/screenshot.png)
 
-## Возможности
+## Features
 
-- Главный экран с фото авто, преимуществами и кнопками записи.
-- Карточки услуг с ценами и длительностью; кнопка «Записатися» сразу подставляет услугу в форму.
-- Форма записи с проверкой имени, украинского номера телефона, даты (не в прошлом) и времени.
-- Номер телефона открывает чат в Telegram.
-- Адаптивная вёрстка: телефон, планшет, десктоп; мобильное меню.
-- API сохраняет заявки в MongoDB; список заявок доступен только по секретному токену.
+- Hero section with a car photo, key highlights and booking buttons.
+- Service cards with prices and duration; the "Записатися" (Book) button pre-selects the service in the form.
+- Booking form with validation of name, Ukrainian phone number, date (not in the past) and time.
+- The phone number opens a Telegram chat.
+- Responsive layout for mobile, tablet and desktop, with a mobile menu.
+- The API saves bookings to MongoDB; the booking list is available only with a secret token.
 
-## Стек
+## Tech Stack
 
-| Часть | Технологии |
+| Part | Technologies |
 | --- | --- |
-| Фронтенд | React 19, TypeScript, Vite, CSS Modules |
-| Бэкенд | Node.js, Express 5, Mongoose |
-| База данных | MongoDB 8 в Docker |
-| Качество кода | oxlint, `tsc` |
+| Frontend | React 19, TypeScript, Vite, CSS Modules |
+| Backend | Node.js, Express 5, Mongoose |
+| Database | MongoDB 8 in Docker |
+| Code quality | oxlint, `tsc` |
 
-## Структура
+## Project Structure
 
 ```
 client/
-  components/      компоненты; у каждого своя папка: X.tsx, X.module.css, index.ts
+  components/      components; each has its own folder: X.tsx, X.module.css, index.ts
     Header/  Hero/  Services/  BookingForm/  Footer/
-  data/            контакты и список услуг
-  lib/booking.ts   проверка заявки — общая для формы и сервера
-  assets/          изображения
-  index.css        CSS-переменные и базовые стили
+  data/            contacts and the list of services
+  lib/booking.ts   booking validation shared by the form and the server
+  assets/          images
+  index.css        CSS variables and base styles
 server/
-  index.ts         запуск Express и подключение к MongoDB
-  routes/          маршруты /api/bookings
-  models/          схема заявки Mongoose
+  index.ts         Express startup and MongoDB connection
+  routes/          /api/bookings routes
+  models/          Mongoose booking schema
 ```
 
-## Запуск локально
+## Running Locally
 
-Понадобятся Node.js 22+ и Docker.
+Requires Node.js 22+ and Docker.
 
-1. Установить зависимости:
+1. Install dependencies:
 
    ```bash
    npm install
    ```
 
-2. Создать файл `.env` из примера и задать свой `ADMIN_TOKEN`:
+2. Create a `.env` file from the example and set your own `ADMIN_TOKEN`:
 
    ```bash
    cp .env.example .env
    ```
 
-3. Запустить MongoDB в Docker (первый раз):
+3. Start MongoDB in Docker (first time):
 
    ```bash
    docker run -d --name car-wash-mongo -p 27017:27017 -v car-wash-mongo-data:/data/db mongo:8
    ```
 
-   В следующие разы достаточно `docker start car-wash-mongo`.
+   After that, `docker start car-wash-mongo` is enough.
 
-4. Запустить фронтенд и API одной командой:
+4. Start the frontend and the API with one command:
 
    ```bash
    npm run dev:all
    ```
 
-   Сайт: http://localhost:5173, API: http://localhost:3001.
+   Site: http://localhost:5173, API: http://localhost:3001.
 
-## Скрипты
+## Scripts
 
-| Команда | Что делает |
+| Command | Description |
 | --- | --- |
-| `npm run dev` | только фронтенд (Vite) |
-| `npm run dev:server` | только API с перезапуском при изменениях |
-| `npm run dev:all` | фронтенд и API вместе |
-| `npm run build` | проверка типов и сборка в `dist/` |
-| `npm run lint` | проверка кода oxlint |
-| `npm run preview` | просмотр собранной версии |
+| `npm run dev` | frontend only (Vite) |
+| `npm run dev:server` | API only, restarts on changes |
+| `npm run dev:all` | frontend and API together |
+| `npm run build` | type check and build into `dist/` |
+| `npm run lint` | lint the code with oxlint |
+| `npm run preview` | preview the production build |
 
-## Переменные окружения
+## Environment Variables
 
-| Переменная | Пример | Назначение |
+| Variable | Example | Purpose |
 | --- | --- | --- |
-| `PORT` | `3001` | порт API |
-| `MONGODB_URI` | `mongodb://localhost:27017/car-wash` | адрес базы |
-| `ADMIN_TOKEN` | `change-me` | секрет для просмотра заявок |
+| `PORT` | `3001` | API port |
+| `MONGODB_URI` | `mongodb://localhost:27017/car-wash` | database connection string |
+| `ADMIN_TOKEN` | `change-me` | secret for viewing bookings |
 
 ## API
 
-| Метод | Путь | Описание |
+| Method | Path | Description |
 | --- | --- | --- |
-| `GET` | `/api/health` | состояние сервера и базы |
-| `POST` | `/api/bookings` | создать заявку; `201` при успехе, `400` с ошибками полей |
-| `GET` | `/api/bookings` | последние 100 заявок; нужен заголовок `x-admin-token` |
+| `GET` | `/api/health` | server and database status |
+| `POST` | `/api/bookings` | create a booking; `201` on success, `400` with field errors |
+| `GET` | `/api/bookings` | latest 100 bookings; requires the `x-admin-token` header |
 
-Пример просмотра заявок:
+Example of viewing bookings:
 
 ```bash
 curl -H "x-admin-token: $ADMIN_TOKEN" http://localhost:3001/api/bookings
