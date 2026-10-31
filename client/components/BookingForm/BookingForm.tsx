@@ -1,7 +1,9 @@
 import { useState, type ChangeEvent, type FormEvent, type ReactNode } from 'react'
 import { contacts } from '../../data/contacts'
 import { formatPrice, services } from '../../data/services'
+import { useAuth } from '../../auth/AuthContext'
 import {
+  formatDate,
   getToday,
   timeSlots,
   validateBooking,
@@ -20,8 +22,6 @@ type SubmitStatus = 'idle' | 'sending' | 'success' | 'error'
 
 const initialValues: FormValues = { name: '', phone: '', date: '', time: '', comment: '' }
 
-const formatDate = (isoDate: string) => isoDate.split('-').reverse().join('.')
-
 const sendBooking = async (input: BookingInput) => {
   const response = await fetch('/api/bookings', {
     method: 'POST',
@@ -39,6 +39,7 @@ const sendBooking = async (input: BookingInput) => {
 const inputClass = (hasError: boolean) => `${styles.input} ${hasError ? styles.inputError : ''}`
 
 export function BookingForm({ serviceId, onServiceChange }: BookingFormProps) {
+  const { user } = useAuth()
   const [values, setValues] = useState<FormValues>(initialValues)
   const [errors, setErrors] = useState<BookingErrors>({})
   const [status, setStatus] = useState<SubmitStatus>('idle')
@@ -113,6 +114,7 @@ export function BookingForm({ serviceId, onServiceChange }: BookingFormProps) {
                 {values.name.trim()}, чекаємо на вас {formatDate(values.date)} о{' '}
                 {values.time} на послугу «{selectedService?.title}». Ми передзвонимо для
                 підтвердження.
+                {user && ' Запис збережено в розділі «Мої записи».'}
               </p>
               <button type="button" onClick={handleReset} className={styles.resetButton}>
                 Новий запис

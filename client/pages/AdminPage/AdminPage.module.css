@@ -1,0 +1,285 @@
+.page {
+  min-height: 100dvh;
+  background-color: var(--slate-50);
+}
+
+/* Top bar */
+
+.topBar {
+  background-color: var(--ink-900);
+  color: #fff;
+}
+
+.topBarInner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  height: var(--header-height);
+  max-width: var(--container-width);
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 1.125rem;
+  font-weight: 800;
+  letter-spacing: -0.025em;
+}
+
+.logoIcon {
+  width: 1.75rem;
+  height: 1.75rem;
+}
+
+.logoBadge {
+  border-radius: var(--radius-full);
+  background-color: rgb(6 182 212 / 0.15);
+  padding: 0.125rem 0.5rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: normal;
+  color: var(--brand-400);
+}
+
+.topBarActions {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+}
+
+.userEmail {
+  display: none;
+  font-size: 0.875rem;
+  color: var(--slate-400);
+}
+
+.topBarLink {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--slate-200);
+  transition: color var(--transition);
+}
+
+.topBarLink:hover {
+  color: var(--brand-400);
+}
+
+/* Content */
+
+.main {
+  max-width: var(--container-width);
+  margin: 0 auto;
+  padding: 2.5rem 1rem 4rem;
+}
+
+.muted {
+  color: var(--slate-500);
+}
+
+.notice {
+  max-width: 28rem;
+  margin: 3rem auto 0;
+  border-radius: 1.5rem;
+  background-color: #fff;
+  padding: 2rem;
+  text-align: center;
+  box-shadow: 0 1px 3px rgb(0 0 0 / 0.08);
+}
+
+.noticeTitle {
+  margin-bottom: 0.5rem;
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: var(--ink-900);
+}
+
+.primaryButton {
+  display: inline-block;
+  margin-top: 1.5rem;
+  border-radius: var(--radius-full);
+  background-color: var(--brand-500);
+  padding: 0.75rem 1.5rem;
+  font-weight: 600;
+  color: #fff;
+  transition: background-color var(--transition);
+}
+
+.primaryButton:hover {
+  background-color: var(--brand-600);
+}
+
+.toolbar {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.title {
+  font-size: 1.875rem;
+  font-weight: 800;
+  color: var(--ink-900);
+}
+
+.secondaryButton {
+  border: 1px solid var(--slate-200);
+  border-radius: var(--radius-full);
+  background-color: #fff;
+  padding: 0.5rem 1.25rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--slate-800);
+  transition: background-color var(--transition);
+}
+
+.secondaryButton:hover {
+  background-color: var(--slate-100);
+}
+
+.secondaryButton:disabled {
+  cursor: wait;
+  opacity: 0.6;
+}
+
+.alert {
+  margin-bottom: 1rem;
+  border-radius: 0.75rem;
+  background-color: var(--red-50);
+  padding: 0.75rem 1rem;
+  font-size: 0.875rem;
+  color: var(--red-600);
+}
+
+/* Table */
+
+.tableWrapper {
+  overflow-x: auto;
+  border: 1px solid var(--slate-200);
+  border-radius: 1rem;
+  background-color: #fff;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.875rem;
+}
+
+.table th {
+  border-bottom: 1px solid var(--slate-200);
+  background-color: var(--slate-50);
+  padding: 0.75rem;
+  text-align: left;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--slate-500);
+  white-space: nowrap;
+}
+
+.table td {
+  border-bottom: 1px solid var(--slate-100);
+  padding: 0.875rem 0.75rem;
+  vertical-align: top;
+  color: var(--slate-800);
+}
+
+.table tbody tr:last-child td {
+  border-bottom: 0;
+}
+
+.table tbody tr:hover {
+  background-color: var(--slate-50);
+}
+
+.nowrap {
+  white-space: nowrap;
+}
+
+.secondary {
+  font-size: 0.8125rem;
+  color: var(--slate-500);
+}
+
+.visitDate {
+  font-weight: 600;
+  color: var(--ink-900);
+}
+
+.account {
+  min-width: 7.5rem;
+  max-width: 13rem;
+  overflow-wrap: anywhere;
+}
+
+.clientName {
+  font-weight: 600;
+  color: var(--ink-900);
+}
+
+.phone {
+  color: var(--brand-600);
+  white-space: nowrap;
+}
+
+.phone:hover {
+  text-decoration: underline;
+}
+
+.comment {
+  min-width: 8rem;
+  max-width: 14rem;
+  color: var(--slate-600);
+}
+
+.guestBadge {
+  border-radius: var(--radius-full);
+  background-color: var(--slate-100);
+  padding: 0.125rem 0.625rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--slate-500);
+}
+
+.deleteButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.25rem;
+  height: 2.25rem;
+  border-radius: var(--radius-full);
+  color: var(--red-500);
+  transition: background-color var(--transition);
+}
+
+.deleteButton svg {
+  width: 1.25rem;
+  height: 1.25rem;
+}
+
+.deleteButton:hover {
+  background-color: var(--red-50);
+}
+
+.deleteButton:disabled {
+  cursor: wait;
+  opacity: 0.6;
+}
+
+@media (min-width: 640px) {
+  .topBarInner,
+  .main {
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+  }
+
+  .userEmail {
+    display: inline;
+  }
+}

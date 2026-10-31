@@ -1,23 +1,14 @@
-import { useState } from 'react'
-import { BookingForm } from './components/BookingForm'
-import { Footer } from './components/Footer'
-import { Header } from './components/Header'
-import { Hero } from './components/Hero'
-import { Services } from './components/Services'
+import { Navigate, Route, Routes } from 'react-router'
+import { AdminPage } from './pages/AdminPage'
+import { HomePage } from './pages/HomePage'
 
 function App() {
-  const [selectedServiceId, setSelectedServiceId] = useState('')
-
   return (
-    <>
-      <Header />
-      <main>
-        <Hero />
-        <Services onSelect={setSelectedServiceId} />
-        <BookingForm serviceId={selectedServiceId} onServiceChange={setSelectedServiceId} />
-      </main>
-      <Footer />
-    </>
+    <Routes>
+      <Route path="/" element={<HomePage />} />
+      <Route path="/admin" element={<AdminPage />} />
+      <Route path="*" element={<Navigate to="/" replace />} />
+    </Routes>
   )
 }
 

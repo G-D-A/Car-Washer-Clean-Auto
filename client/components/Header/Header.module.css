@@ -44,7 +44,7 @@
 .nav {
   display: none;
   align-items: center;
-  gap: 2rem;
+  gap: 1.5rem;
 }
 
 .navLink {
@@ -94,7 +94,9 @@
 
 .mobileLink {
   display: block;
+  width: 100%;
   padding: 0.75rem 0;
+  text-align: left;
   font-weight: 500;
   color: var(--slate-100);
 }
@@ -116,7 +118,7 @@
   }
 }
 
-@media (min-width: 768px) {
+@media (min-width: 1024px) {
   .nav {
     display: flex;
   }
@@ -124,5 +126,11 @@
   .menuButton,
   .mobileNav {
     display: none;
+  }
+}
+
+@media (min-width: 1152px) {
+  .nav {
+    gap: 2rem;
   }
 }

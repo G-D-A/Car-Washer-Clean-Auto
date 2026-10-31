@@ -1,6 +1,13 @@
 import { useEffect, useState } from 'react'
+import { useNavigate } from 'react-router'
+import { useAuth } from '../../auth/AuthContext'
 import { contacts } from '../../data/contacts'
 import styles from './Header.module.css'
+
+type HeaderProps = {
+  onLoginClick: () => void
+  onMyBookingsClick: () => void
+}
 
 const navLinks = [
   { href: '#services', label: 'Послуги' },
@@ -8,7 +15,9 @@ const navLinks = [
   { href: '#contacts', label: 'Контакти' },
 ]
 
-export function Header() {
+export function Header({ onLoginClick, onMyBookingsClick }: HeaderProps) {
+  const { user, isLoading, logout } = useAuth()
+  const navigate = useNavigate()
   const [isOpen, setIsOpen] = useState(false)
   const [isScrolled, setIsScrolled] = useState(false)
 
@@ -21,6 +30,21 @@ export function Header() {
 
   const closeMenu = () => setIsOpen(false)
   const isSolid = isScrolled || isOpen
+
+  const runAndClose = (action: () => void) => () => {
+    closeMenu()
+    action()
+  }
+
+  const accountActions = isLoading
+    ? []
+    : user
+      ? [
+          ...(user.isAdmin ? [{ label: 'Адмін-панель', onClick: runAndClose(() => navigate('/admin')) }] : []),
+          { label: 'Мої записи', onClick: runAndClose(onMyBookingsClick) },
+          { label: 'Вийти', onClick: runAndClose(() => void logout()) },
+        ]
+      : [{ label: 'Увійти', onClick: runAndClose(onLoginClick) }]
 
   return (
     <header className={`${styles.header} ${isSolid ? styles.solid : ''}`}>
@@ -35,6 +59,11 @@ export function Header() {
             <a key={link.href} href={link.href} className={styles.navLink}>
               {link.label}
             </a>
+          ))}
+          {accountActions.map((action) => (
+            <button key={action.label} type="button" onClick={action.onClick} className={styles.navLink}>
+              {action.label}
+            </button>
           ))}
           <a
             href={contacts.telegramHref}
@@ -69,6 +98,11 @@ export function Header() {
             <a key={link.href} href={link.href} onClick={closeMenu} className={styles.mobileLink}>
               {link.label}
             </a>
+          ))}
+          {accountActions.map((action) => (
+            <button key={action.label} type="button" onClick={action.onClick} className={styles.mobileLink}>
+              {action.label}
+            </button>
           ))}
           <a
             href={contacts.telegramHref}

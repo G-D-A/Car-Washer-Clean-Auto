@@ -1,5 +1,6 @@
-import { Router, type RequestHandler } from 'express'
+import { Router } from 'express'
 import { validateBooking, type BookingInput } from '../../client/lib/booking'
+import { getUserId, requireAuth } from '../auth'
 import { BookingModel } from '../models/Booking'
 
 const asString = (value: unknown) => (typeof value === 'string' ? value.trim() : '')
@@ -16,15 +17,6 @@ const toBookingInput = (body: unknown): BookingInput => {
   }
 }
 
-const requireAdmin: RequestHandler = (req, res, next) => {
-  const token = process.env.ADMIN_TOKEN
-  if (!token || req.header('x-admin-token') !== token) {
-    res.status(401).json({ message: 'Unauthorized' })
-    return
-  }
-  next()
-}
-
 export const bookingsRouter = Router()
 
 bookingsRouter.post('/', async (req, res) => {
@@ -36,11 +28,16 @@ bookingsRouter.post('/', async (req, res) => {
     return
   }
 
-  const booking = await BookingModel.create(input)
+  const userId = getUserId(req)
+  const booking = await BookingModel.create(userId ? { ...input, userId } : input)
   res.status(201).json(booking)
 })
 
-bookingsRouter.get('/', requireAdmin, async (_req, res) => {
-  const bookings = await BookingModel.find().sort({ createdAt: -1 }).limit(100).lean()
+bookingsRouter.get('/my', requireAuth, async (_req, res) => {
+  const bookings = await BookingModel.find({ userId: res.locals.userId })
+    .select('serviceId date time comment createdAt')
+    .sort({ date: -1, time: -1 })
+    .limit(100)
+    .lean()
   res.json(bookings)
 })

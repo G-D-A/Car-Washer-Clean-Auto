@@ -23,6 +23,8 @@ export const getToday = () => {
   return new Date(now.getTime() - offset).toISOString().slice(0, 10)
 }
 
+export const formatDate = (isoDate: string) => isoDate.split('-').reverse().join('.')
+
 const isUkrainianPhone = (digits: string) =>
   (digits.length === 12 && digits.startsWith('380')) ||
   (digits.length === 10 && digits.startsWith('0'))
