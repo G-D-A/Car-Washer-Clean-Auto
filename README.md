@@ -39,6 +39,7 @@ client/
 server/
   index.ts         Express startup and MongoDB connection
   auth.ts          JWT cookie helpers, requireAuth and requireAdmin middleware
+  seedAdmin.ts     creates the admin account from .env on start
   routes/          /api/auth, /api/bookings and /api/admin routes
   models/          Mongoose schemas: User, Booking
 ```
